@@ -1,0 +1,116 @@
+pandas.read_csv
+
+sep: indica cómo separar los elementos. Por defecto es la coma
+(comma-separated values), pero se puede modificar.
+
+header: sii no se le pasa una lista de encabezados toma la primera fila como
+encabezado. Se puede seleccionar cualquier fila como encabezado. Si no tiene
+encabezado y no se quiere usar ninguna de los datos se utiliza None.
+
+dtype: indica el tipo de datos del data frame. Por defecto detecta el tipo de datos
+por columna.
+
+skiprows: ignora un número de filas. Por defecto es 0.
+
+nrows: cantidad de líneas que se leen del archivo. Sirve cuando el archivo es muy grande.
+
+df.head: muestra un número dado de la parte inicial del data frame. Por defecto su valor es 5.
+
+df.tail: de igual manera, muestra un número dado del final del data frame. Por defecto su valor es 5.
+
+df.max(): nos dice el valor máximo por columna.
+
+df.min(): ídem al anterior pero con el valor mínimo.
+
+df.count(): devuelve la cantidad de datos no nulos de cada columna.
+
+Podemos verificar condiciones por columna de un data frame. Por ejemplo, imprimir
+los valores de todas las columnas, cuyas filas sean mayores a O en la columna A:
+
+>>> datos = {"A": [-1, 54, -4, 5], "B": [7, 91, -46, 8], "C": [18, 93, 0, 1]}
+
+>>> df = pd.DataFrame(datos)
+>>> print(df)
+
+   A B C
+0 -1 7 18
+1 54 91 93
+2 -4 -46 0
+3 5 8 1
+
+>>> print(df.loc[df["A"] > 0)
+  A  B  C
+1 54 91 93
+3  5  8  1
+
+pandas.concat():
+Se pueden concatenar objetos de manera de unirlos generando nuevas columnas
+y/o nuevas filas.
+df1 = pd.DataFrame({"A":["AO","A1","A2","A3"], "B":["BO" "B1","B2","B3"] , "C": ["CO","C1","C2" "C3"], "D": ["DO","D1","D2","D3"]}, index=[o, 1, 2, 3])
+df2 = pd.DataFrame ({"B":["B2","B3",B6","B7"], "D":["D2","D3","D6","D7"], "F":["F2","F3","F6","F7"]}, index=[2, 3, 6, 7])
+
+Por defecto este método usa el eje de las columnas para unir los datos (axis=0) y
+une los data frames de manera que quede uno abajo de otro y, a su vez, uniendo
+las columnas (se agregan las nuevas):
+
+>>> result = pd.concat([df1, df2])
+>>> print(result)
+    A   B   C   D   F 
+0   A0  B0  C0  D0  NaN
+1                   NaN
+2                   NaN
+3
+4
+5      completar
+6
+7
+
+Podemos cambiar el eje y usar las filas para que se unan los data frames:
+
+>>> result = pd.concat([df1, df2], axis=1)
+>>> print(result)
+
+    A   B   C   D   B   
+0   A0  B0  C0  D0  NaN
+1                   NaN
+2                   NaN
+3
+4
+5      completar
+6
+7
+
+En lugar de la unión, podemos querer la intersección de los data frames (solo lo
+que tengan en común), para lo cual podemos modificar el método de unión (por
+defecto es "outer", el cual me da la unión completa de los data frames):
+>>> result = pd.concat([df1, df2], join="inner")
+>>> print(result)
+
+
+pandas.append(): Es un método anterior a concat() el cual no modifica el data
+frame (hay que guardar el resultado).
+>>> result = df1.append(df2)
+>>> print(result)
+
+
+
+
+Podemos concatenar data frames con series:
+S1 = pd.Series (["XO","X1","X2","X3"] , name="X")
+
+>>> result = pd.concat([df1, s1], axis=1)
+>>> print(result)
+
+
+
+to_dict(), to_list()
+Los data frames se pueden guardar como diccionarios:
+
+>>> print(df6)
+
+  A B C X Y
+0 1 2 3 4 8
+1 5 6 7 4 8
+
+>>> print(df6.to_dict())
+{'A': {O: 1, 1: 5}, 'B': {0: 2, 1: 6},'C': {0: 3, 1: 7},'X': {0: 4, 1: 4}, 'Y': {O: 8, 1: 8}}
