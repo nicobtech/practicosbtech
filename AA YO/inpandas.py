@@ -15,11 +15,11 @@ from sklearn.model_selection import train_test_split
 
 path = r"C:\Users\nicol\OneDrive\Escritorio\informatica\personas_2011.csv"
 df = pd.read_csv(path, ";") 
-# print(df)
-# print(df.info())
-# print(df.describe())
+print(df)
+print(df.info())
+print(df.describe())
 
-# print(df.isnull().sum())
+print(df.isnull().sum())
 
 for i in df.columns:
     print((df[i].isnull().sum())/ len(df[i])*100, "%")
@@ -27,16 +27,25 @@ for i in df.columns:
 #sns.heatmap(df.isnull(), cmap='viridis')
 #plt.show()
 
-def limpieza(df):   
+# def limpieza(df):   
 
-    df.fillna(df['categoria_conicet_id'].mean(), inplace=True)
-    df.fillna(df['categoria_incentivos'].mean(), inplace=True)
-    df.fillna(df['max_dedicacion_horaria_docente_id'].mean(), inplace=True)
-    df.fillna(df['institucion_cargo_docente_id'].mean(), inplace=True)
-    df.fillna(df['clase_cargo_docente_id'].mean(), inplace=True)
-    df.fillna(df['tipo_condicion_docente_id'].mean(), inplace=True)
+#     df.fillna(df['categoria_conicet_id'].mean(), inplace=True)
+#     df.fillna(df['categoria_incentivos'].mean(), inplace=True)
+#     df.fillna(df['max_dedicacion_horaria_docente_id'].mean(), inplace=True)
+#     df.fillna(df['institucion_cargo_docente_id'].mean(), inplace=True)
+#     df.fillna(df['clase_cargo_docente_id'].mean(), inplace=True)
+#     df.fillna(df['tipo_condicion_docente_id'].mean(), inplace=True)
 
-print(limpieza(df))
+# print(limpieza(df))
+df.reset_index() #Usamos un reset_index para que las filas estén ordenadas del 0 hasta el último nro
+contador = 0
+
+for valor in df['categoria_conicet_id']:
+    if valor is not int:
+        df.drop([contador], axis = 0, inplace = True)
+    contador +=1
+
+
 
 # print(df.info())
 # print(df.describe())
@@ -53,3 +62,7 @@ plt.show()
 sns.boxplot(df["institucion_cargo_docente_id"])
 df= df[df["persona_id"]<= 2050]
 plt.show()
+
+print(df.info())
+print(df.describe())
+
